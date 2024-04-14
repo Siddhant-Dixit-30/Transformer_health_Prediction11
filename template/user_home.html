@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>USER</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" 	   type="image/png"href="{{ url_for('static',filename='images/icons/favicon.ico') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/animate/animate.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/select2/select2.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+</head>
+<body><style>
+	/* CSS code to add border to input field */
+	input[type="number"] {
+		border: 3px solid #4b94f9; /* Border style */
+		border-radius: 5px; /* Border radius for rounded corners */
+		padding: 8px; /* Padding inside the input field */
+		font-size: 16px; /* Font size */
+		outline: none; /* Remove default outline */
+		padding: 8px; /* Padding inside the input field */
+         
+            margin-right: 10px; 
+	}
+
+	label {
+            width: 100px; /* Set the width of the labels */
+            display: inline-block; /* Make labels behave like inline-block elements */
+            text-align: right; /* Align text to the right within labels */
+            margin-right: 10px; /* Add margin between labels and input fields */
+        }
+	/* CSS code to add border when input field is focused */
+	
+</style>
+
+	<div class="contact1">
+		<div class="container-contact1">
+			<div class="contact1-pic js-tilt" data-tilt>
+				<img src="{{ url_for('static',filename='images/tweet.png') }}" alt="IMG">
+			</div>
+
+			<form method="post" action="{{ url_for('prediction') }}" enctype="multipart/form-data" class="contact1-form validate-form">
+				<span class="contact1-form-title">
+					Power Transform Health and Life Predictor
+				</span>
+                <label for="prediction-type">Prediction:</label>
+					<select id="prediction-type" name="prediction-type">
+					  <option value="life">Life Prediction</option>
+					  <option value="health">Health Prediction</option>
+					</select>
+				<label for="CO2">CO2:</label><input type="number" id="CO2" name="CO2"><br>
+				<label for="Oxigen">Oxygen:</label><input type="number" id="Oxigen" name="Oxigen" ><br>
+				<label for="Ethylene">Ethylene:</label><input type="number" id="Ethylene" name="Ethylene"><br>
+				<label for="Hydrogen">Hydrogen:</label><input type="number" id="Hydrogen"  name="Hydrogen"><br>
+				<label for="CO">CO:</label><input type="number" id="CO" name="CO"><br>
+				<label for="Methane">Methane:</label><input type="number" id="Methane" name="Methane"><br>
+				<label for="Nitrogen">Nitrogen:</label><input type="number" id="Nitrogen"  name="Nitrogen"><br>
+				<br><br>
+				<div class="container-contact1-form-btn">
+					<button type="submit" class="contact1-form-btn">
+						<span>
+							Check
+							<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+				</div>
+                
+				<br><br>
+				
+				<div class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+					
+				</div>
+		
+				
+				<center><a href="{{ url_for('logout') }}" class="btn">Logout</a></center>
+			</form>
+		</div>
+	</div>
+
+
+	<script src="{{ url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/select2/select2.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/tilt/tilt.jquery.min.js') }}"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+	<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+</body>
+</html>

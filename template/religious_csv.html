@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Admin | {{session}}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" 	   type="image/png"href="{{ url_for('static',filename='images/icons/favicon.ico') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/animate/animate.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/select2/select2.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/paginate.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ligne.css') }}">	
+	
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+ #d {
+  text-decoration-line: overline underline;
+  text-decoration-style: wavy;
+}
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+  
+ 
+
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;}
+</style>
+</head>
+<body>
+  
+	<div class="contact1">
+		<div class="container-contact1">
+		<div id="d"><a href="{{ url_for('admin') }}" class="btn"><h5 style="background-color:powderblue;">HOME</h5></a></div>
+              <center>
+			  <a href="{{ url_for('comparative_read') }}" class="btn"><h5 style="background-color:powderblue;">CURRENT_VOLTAGE</h5></a>
+			  <a href="{{ url_for('abusive_read') }}" class="btn"><h5 style="background-color:powderblue;">DATASET</h5></a></center>
+	
+<a href="{{ url_for('all_analysis') }}" class="btn"><h5 style="background-color:powderblue;">ANALYSIS</h5></a></center>	
+<a href="{{ url_for('logout') }}" class="btn"><h5 style="background-color:powderblue;">LOGOUT</h5></a></center>	
+	  
+			
+            <div class="panel">
+                <div class="body">
+                    <div class="input-group">
+					<br>
+                        <label for="searchBox">Filter</label> &nbsp; &nbsp;&nbsp;
+                       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for .." title="Type in a name">
+                    </div>
+                </div>
+            </div>
+			<div style="height:400px;overflow:auto;">
+            <table class="myTable table hover">
+			<table id="myTable">
+  <tr class="header">
+ 
+    <th style="width:90%;">Text</th>
+    <th style="width:10%;">Target</th>
+  </tr>     
+                <tbody>
+				<!-- <tr>
+					<th>No</th>
+					<th></th>
+					<th></th>
+				</tr> -->
+				{% for value in DataOut%}	
+                <tr>
+                   
+                    <td>{{value[1]}}</td>
+					<td>{{value[2]}}</td>
+                </tr>
+				{% endfor %}
+                </tbody>
+				
+            </table>
+			
+			</div>
+			
+		</div>
+	</div>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+    <script>
+        let options = {
+            numberPerPage:5, 
+            goBar:true, 
+            pageCounter:true,
+        };
+
+        let filterOptions = {
+            el:'#searchBox' //Caja de texto para filtrar, puede ser una clase o un ID
+        };
+
+        paginate.init('.myTable',options,filterOptions);
+    </script>
+    <script src="{{ url_for('static',filename='js/paginate.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/select2/select2.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='vendor/tilt/tilt.jquery.min.js') }}"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+	<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+</body>
+</html>

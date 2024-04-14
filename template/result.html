@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Gauge meter</title>
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+      html, body
+			{
+				padding: 0;
+				margin: 0;
+                
+			}
+
+			
+
+			
+  </style>
+
+</head>
+<body bg="black">
+<!-- partial:index.partial.html -->
+<link href='https://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css'>
+
+               <center>My Tweets</center>
+			<table class="myTable table hover">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Tweet</th>
+                    <th>Label</th>
+                 
+                </tr>
+
+                {% for row in DataOut %}  
+                <tr>
+                    <form>
+                        
+                        <th>{{ row[0] }}</th>
+                        <th>{{ row[2] }}</th>
+                        <th>{{ row[3] }}</th>
+                        
+                        {% endif %}
+                    </form>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+		</div>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
