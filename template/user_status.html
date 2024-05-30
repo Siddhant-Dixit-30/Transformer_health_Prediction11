@@ -1,110 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Admin | {{session}}</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" 	   type="image/png"href="{{ url_for('static',filename='images/icons/favicon.ico') }}"/>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/animate/animate.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/select2/select2.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/util.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+    <title>Admin | {{session}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/icons/favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/animate/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/paginate.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ligne.css') }}">	
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ligne.css') }}">    
 </head>
 <body>
 
-	<div class="contact1">
-		<div class="container-contact1">
-		<div id="d"><a href="{{ url_for('admin') }}" class="btn"><h5 style="background-color:powderblue;">HOME</h5></a></div>
-			<h2 class="contact1-form-title">User Status</h2>
-            <div class="panel">
-                <div class="body">
-                    <div class="input-group">
-                        <input type="search" id="searchBox" placeholder="Filter...">
-                    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">ETHP-DASH</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="contact1">
+    <div class="container-contact1">
+        <h2 class="contact1-form-title">User Status</h2>
+        <div class="panel">
+            <div class="body">
+                <div class="input-group">
+                    <input type="search" id="searchBox" placeholder="Filter...">
                 </div>
             </div>
-            <table class="myTable table hover">
-                <tbody>
-                <tr>
-                    <th>Date Added</th>
-                    <th>User Name</th>
-                    <th>User Email</th>
-                    <th>User Mobile</th>
-                    <th>Status</th>
-                </tr>
+        </div>
+        <table class="myTable table hover">
+            <tbody>
+            <tr>
+                <th>Date Added</th>
+                <th>User Name</th>
+                <th>User Email</th>
+                <th>User Mobile</th>
+                <th>Status</th>
+            </tr>
 
-                {% for row in data %}  
-                <tr>
-                    <form>
-                        
-                        <th>{{ row[1] }}</th>
-                        <th>{{ row[2] }}</th>
-                        <th>{{ row[3] }}</th>
-                        <th>{{ row[5] }}</th>
-                        {% if row[6]  | int  >= 3 %}
-                        <th>
-                            <button type="submit" formmethod="post" name="userid" value="{{ row[3] }}" formaction="{{ url_for('Activation') }}"  onclick="alert('Loading..!!')" class="btn btn-danger">
-                                <span>
-                                    Blocked
-                                </span>
-                            </button>
-                        </th>
-                        {% else %}
-                        <th> 
-                            <button type="button" class="btn btn-info">
-                                <span>
-                                    Active
-                                </span>
-                            </button>
-                        </th>
-                        {% endif %}
-                    </form>
-                </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-
-            <br><br>
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
-            </div>
+            {% for row in data %}  
+            <tr>
+                <form>
+                    
+                    <th>{{ row[1] }}</th>
+                    <th>{{ row[2] }}</th>
+                    <th>{{ row[3] }}</th>
+                    <th>{{ row[5] }}</th>
+                    {% if row[6]  | int  >= 3 %}
+                    <th>
+                        <button type="submit" formmethod="post" name="userid" value="{{ row[3] }}" formaction="{{ url_for('Activation') }}"  onclick="alert('Loading..!!')" class="btn btn-danger">
+                            <span>
+                                Blocked
+                            </span>
+                        </button>
+                    </th>
+                    {% else %}
+                    <th> 
+                        <button type="button" class="btn btn-info">
+                            <span>
+                                Active
+                            </span>
+                        </button>
+                    </th>
+                    {% endif %}
+                </form>
+            </tr>
             {% endfor %}
-			<center><a href="{{ url_for('logout') }}" class="btn">Logout</a></center>		
-		</div>
-	</div>
 
-    <script>
-        let options = {
-            numberPerPage:5, 
-            goBar:true, 
-            pageCounter:true,
-        };
+            </tbody>
+        </table>
 
-        let filterOptions = {
-            el:'#searchBox' //Caja de texto para filtrar, puede ser una clase o un ID
-        };
+        <br><br>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
-        paginate.init('.myTable',options,filterOptions);
-    </script>
-    <script src="{{ url_for('static',filename='js/paginate.js') }}"></script>
-	<script src="{{ url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-	<script src="{{ url_for('static',filename='vendor/bootstrap/js/popper.js') }}"></script>
-	<script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-	<script src="{{ url_for('static',filename='vendor/select2/select2.min.js') }}"></script>
-	<script src="{{ url_for('static',filename='vendor/tilt/tilt.jquery.min.js') }}"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-	<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+<script>
+    let options = {
+        numberPerPage:5, 
+        goBar:true, 
+        pageCounter:true,
+    };
+
+    let filterOptions = {
+        el:'#searchBox' 
+    };
+
+    paginate.init('.myTable',options,filterOptions);
+</script>
+<script src="{{ url_for('static',filename='js/paginate.js') }}"></script>
+<script src="{{ url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static',filename='vendor/bootstrap/js/popper.js') }}"></script>
+<script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename='vendor/select2/select2.min.js') }}"></script>
+<script src="{{ url_for('static',filename='vendor/tilt/tilt.jquery.min.js') }}"></script>
+<script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
 </body>
 </html>

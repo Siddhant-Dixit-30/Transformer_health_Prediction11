@@ -27,28 +27,30 @@ def login_nav():
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    username=request.form['username']
-    password = request.form['password']
-    if username=="admin" and password=="admin":
-        session['username'] = username
-        return redirect(url_for('admin'))
-    else:
-        # username=session['username']
-        if(dc.block(username)==0):
-            out=dc.db_login(username,password)
-            if out=="yes":
-                session['userid'] = dc.getUserID(username)
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == "admin" and password == "admin":
+            session['username'] = username
+            return redirect(url_for('admin'))
+        
+        block_status = dc.block(username)
+        if block_status == 1:
+            flash(f"{username} has been blocked for security reasons. Contact administrator.")
+            return redirect(url_for('index'))
+        elif block_status == 0:
+            login_result = dc.db_login(username, password)
+            if login_result == "yes":
                 session['username'] = username
                 return redirect(url_for('user'))
             else:
-                dc.alter_counter(username)
-                msg='login Failed'
-                return redirect(url_for('login_nav'))
+                flash('Login Failed. Please check your username and password.')
+                return redirect(url_for('index'))
         else:
-            msg= username + " has been Blocked for Security Reasons. Contact your Administrator"
-            flash(msg)
-            session.pop('username', None)
-            return redirect(url_for('login_nav'))
+            flash('An error occurred. Please try again.')
+            return redirect(url_for('index'))
+
+    return render_template('login.html')
 
 @app.route('/user')
 def user():

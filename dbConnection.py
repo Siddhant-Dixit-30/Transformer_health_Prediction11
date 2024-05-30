@@ -1,9 +1,9 @@
 import mysql.connector as con
-import mysql as mysql
+import mysql
 
 db = con.connect(
         host="localhost",
-        user="Siddhant",
+        user="root",
         password="123456",
         database="db_projectml"
 )
@@ -43,14 +43,14 @@ def db_register(name, email, password, mobile, db=db):
         
 def block(user,db=db):
         cur = db.cursor()
-        query="SELECT usr_counter FROM tbl_users where usr_email= %s"
-        cur.execute(query,(user,))
+        query="SELECT usr_counter FROM tbl_users where usr_email="+"'"+user+"'"
+        cur.execute(query)
         names=cur.fetchall()
         names= [i[0] for i in names]
         if(int(names[0])>=3):
-            return True
+            return 1
         else:
-             return False
+             return 0
 
 def alter_counter(user,db=db):
         cur = db.cursor()

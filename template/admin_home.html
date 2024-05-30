@@ -28,7 +28,7 @@
 
         .sidebar-menu {
             list-style: none;
-            padding: 0;
+            padding: 20px;
             margin: 0;
         }
 
@@ -51,6 +51,7 @@
 
         .content {
             padding: 20px;
+            margin-left: 270px; /* Add left margin to avoid sidebar overlap */
         }
 
         .btn-logout {
@@ -102,43 +103,46 @@
             }
 
             .hamburger.active .line:nth-child(1) {
-                transform-origin: top left;
+                transform-origin: top right;
             }
 
             .hamburger.active .line:nth-child(3) {
-                transform-origin: bottom left;
+                transform-origin: bottom right;
             }
 
             .navbar {
-            background-color: #333;
-            padding: 10px 0;
-        }
+                background-color: #333;
+                padding: 10px 0;
+            }
 
-        .navbar-brand {
-            color: #fff;
-            font-size: 24px;
-            font-weight: bold;
-        }
+            .navbar-brand {
+                padding-top: 30px;
+                color: #fff;
+                font-size: 24px;
+                font-weight: bold;
+            }
 
-        .navbar-toggler {
-            color: #fff;
-            border: none;
-            background-color: transparent;
-        }
+            .navbar-toggler {
+                color: #fff;
+                border: none;
+                background-color: transparent;
+            }
 
-        .navbar-toggler:focus {
-            outline: none;
-        }
+            .navbar-toggler:focus {
+                outline: none;
+            }
 
-        .navbar-toggler-icon {
-            font-size: 24px;
-        }
+            .navbar-toggler-icon {
+                font-size: 24px;
+            }
+
+            .content {
+                margin-left: 0; /* Reset left margin for mobile view */
+            }
         }
     </style>
 </head>
 <body>
-
-    
 
 <div class="sidebar" id="sidebar">
     <nav class="navbar navbar-expand-lg">
@@ -151,7 +155,7 @@
     </nav>
     
     <ul class="sidebar-menu">
-        <li><a href="{{ url_for('scvread') }}">Dataset</a></li>
+        <li><a href="{{ url_for('scvread') }}">Dashboard</a></li>
         <li><a href="{{ url_for('usr_status') }}">User Status</a></li>
         <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
     </ul>
@@ -164,6 +168,24 @@
         <form method="post" action="{{ url_for('login') }}" enctype="multipart/form-data" class="contact1-form validate-form">
             <!-- Your existing form content goes here -->
         </form>
+
+        <!-- Static Graphs -->
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <canvas id="voltageChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="currentChart"></canvas>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <canvas id="oilTempChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="windingTempChart"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -178,6 +200,7 @@
 <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static',filename='vendor/select2/select2.min.js') }}"></script>
 <script src="{{ url_for('static',filename='vendor/tilt/tilt.jquery.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     $('.js-tilt').tilt({
         scale: 1.1
@@ -187,7 +210,67 @@
         var sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('active');
     }
+
+    // Data for static graphs
+    const voltageData = [220, 230, 240, 235, 225];
+    const currentData = [5, 10, 8, 6, 7];
+    const oilTempData = [60, 65, 70, 68, 64];
+    const windingTempData = [75, 80, 78, 77, 76];
+
+    // Chart configurations
+    const config = (label, data, color) => ({
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+                label: label,
+                data: data,
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Value'
+                    }
+                }
+            }
+        }
+    });
+
+// Initialize charts
+window.onload = function() {
+        const voltageCtx = document.getElementById('voltageChart').getContext('2d');
+        const currentCtx = document.getElementById('currentChart').getContext('2d');
+        const oilTempCtx = document.getElementById('oilTempChart').getContext('2d');
+        const windingTempCtx = document.getElementById('windingTempChart').getContext('2d');
+
+        new Chart(voltageCtx, config('Voltage (V)', voltageData, 'rgba(255, 99, 132, 0.6)'));
+        new Chart(currentCtx, config('Current (A)', currentData, 'rgba(54, 162, 235, 0.6)'));
+        new Chart(oilTempCtx, config('Oil Temperature (°C)', oilTempData, 'rgba(75, 192, 192, 0.6)'));
+        new Chart(windingTempCtx, config('Winding Temperature (°C)', windingTempData, 'rgba(153, 102, 255, 0.6)'));
+    };
 </script>
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 </body>
 </html>
+
+ 
